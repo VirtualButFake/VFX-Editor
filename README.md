@@ -4,7 +4,7 @@ A feature-packed editor aimed at ROBLOX VFX.
 * Sleek UI with a heavy focus on ease of use, written in Fusion
 * All of your tools in 1 place. No more switching between several plugins.
 * No learning curve. This plugin is similiar to existing ROBLOX features usage-wise, and you'll be able to understand all of it's features with no prior usage.
-* Easily expandable - our code is open-source and we actively encourage contribution.
+* Easily expandable - our code is open-source and we're always open to contribution.
 
 ## Features
 * Modification of all properties - supports NumberSequence, ColorSequences, numbers and strings. 
