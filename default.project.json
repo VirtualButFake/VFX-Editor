@@ -1,0 +1,9 @@
+{
+  "name": "VFXEditor",
+  "tree": {
+    "Packages": {
+      "$path": "packages"
+    },
+    "$path": "src"
+  }
+}
