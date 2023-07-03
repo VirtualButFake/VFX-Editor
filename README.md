@@ -9,7 +9,7 @@ A feature-packed editor aimed at ROBLOX VFX.
 ## Features
 * Modification of all properties - supports NumberSequence, ColorSequences, numbers and strings. 
 * Handy graph editor for NumberSequences - supports bezier curves and all tweening variants while compressing the data when actually applying the property.
-* Texture storage - no more "particle baseplates". We support both normal textures and flipbooks and will show them both in the plugin, allowing you to easily pick out the textures you wish to use without any unneccessary effort. The texture storage also supports categories, so you can easily access variants of a texture.
+* Texture storage - We support both normal textures and flipbooks and will show and play them both in the plugin, allowing you to easily pick out the textures you wish to use without any unneccessary effort. The texture storage also supports categories, so you can easily access variants of a texture, without getting lost in other textures.
 * Easily copy and paste properties. Unlike the original ROBLOX properties window, you can easily paste any property, including NumberSequences and ColorSequences onto other instances, with graph data transferring over.
 * Organized interface - our interface takes heavy inspiration from the ROBLOX explorer and the After Effects properties panel, resulting in an easy-to-understand interface which just makes sense, even for new developers.
 
