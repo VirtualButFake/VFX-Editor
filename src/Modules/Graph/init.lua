@@ -38,16 +38,12 @@ local function getPoint(points: { point }, pointIndex): point
 		if lastPoint then
 			if pointIndex > lastPoint and pointIndex < point.index then
 				-- falls inbetween
-				local width = point.index - lastPoint
-				local dist = pointIndex - lastPoint
-				local perc = dist / width
-
-				local envelope = interpolate(points[lastPoint].envelope, points[i].envelope, perc)
+				local perc = (pointIndex - lastPoint) / (point.index - lastPoint)
 
 				return {
 					value = interpolate(points[lastPoint].value, points[i].value, perc),
 					index = pointIndex,
-					envelope = envelope,
+					envelope = interpolate(points[lastPoint].envelope, points[i].envelope, perc),
 				}
 			end
 
@@ -79,8 +75,7 @@ local function compressPoints(points: {point}, resolution: number, rangeWidth: n
 	local compressedPoints: { point } = {}
 
 	for i = 0, resolution do
-		local v = start + (resolutionIncrement * i)
-		table.insert(compressedPoints, getPoint(points, v))
+		table.insert(compressedPoints, getPoint(points, start + (resolutionIncrement * i)))
 	end
 
 	local validPoints = {}
