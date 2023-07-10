@@ -240,7 +240,7 @@ function graphHandler.render(self: graph, frame: GuiObject, resolution: number)
 			cap.Parent = line
 
 			local verticalSize = convertTo3D(point.envelope + point.value, self.bounds.y.min, self.bounds.y.max, verticalScale) - endPosition.Y
-			local lowestEnvelope = convertTo3D(lastPoint.envelope + lastPoint.value, self.bounds.y.min, self.bounds.y.max, verticalScale) - startPosition.Y
+			local lastEnvelope = convertTo3D(lastPoint.envelope + lastPoint.value, self.bounds.y.min, self.bounds.y.max, verticalScale) - startPosition.Y
 
 			local envelopeSquare = script.Cube:Clone()
 			envelopeSquare.Color = self.envelopeColor
@@ -250,11 +250,11 @@ function graphHandler.render(self: graph, frame: GuiObject, resolution: number)
 			envelopeSquare.Name = tostring(i)
 
 			envelopeSquare.TopLeft.WorldPosition = pastSegment and pastSegment[1]
-				or startPosition + Vector3.new(0, lowestEnvelope, 0)
+				or startPosition + Vector3.new(0, lastEnvelope, 0)
 			envelopeSquare.TopRight.WorldPosition = endPosition + Vector3.new(0, verticalSize, 0)
 
 			envelopeSquare.BottomLeft.WorldPosition = pastSegment and pastSegment[2]
-				or startPosition - Vector3.new(0, lowestEnvelope, 0)
+				or startPosition - Vector3.new(0, lastEnvelope, 0)
 			envelopeSquare.BottomRight.WorldPosition = endPosition - Vector3.new(0, verticalSize, 0)
 
 			lineData[i] = {envelopeSquare.TopRight.WorldPosition, envelopeSquare.BottomRight.WorldPosition}
