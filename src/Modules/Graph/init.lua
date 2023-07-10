@@ -192,9 +192,7 @@ function graphHandler.render(self: graph, frame: GuiObject, resolution: number)
 
 	-- set our graph distance to size / fovConstant (this way we can treat it like UI)
 	local rangeWidth = self.bounds.x.max - self.bounds.x.min
-	local halfExtent = rangeWidth / fovConstant
-	self._camera.CFrame = CFrame.new(0, 0, halfExtent)
-	self._camera.Parent = self._container
+	self._camera.CFrame = CFrame.new(0, 0, rangeWidth / fovConstant)
 
 	-- calculate useful values
 	local aspectRatio = frame.AbsoluteSize.X / frame.AbsoluteSize.Y
