@@ -1,7 +1,9 @@
 [package]
-name = "vfx-editor"
+name = "virtualbutfake/vfx-editor"
 version = "0.1.0"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 
 [dependencies]
+fusion = "elttob/fusion@0.2.0"
+maid = "nightcycle/maid@1.1.4"
