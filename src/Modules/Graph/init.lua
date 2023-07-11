@@ -2,6 +2,12 @@
 local graphHandler = {}
 graphHandler.__index = graphHandler
 
+-- import assets
+local InsertService = game:GetService("InsertService")
+
+local cube = InsertService:LoadAsset(14021945084):FindFirstChild("Cube")
+cube.Parent = script.assets
+
 local cameraOrientation = CFrame.new(Vector3.new(), Vector3.new(0, 0, -1))
 local fovConstant = 0.017454177141189575 -- found by printing DynamicFieldOfView in a frame with FOV 1 and AR 1:1
 
@@ -62,15 +68,15 @@ local function getPoint(points: { point }, pointIndex): point
 	return {
 		index = pointIndex,
 		value = pointIndex > points[#points].index
-			and extrapolate(points[#points - 1], points[#points], pointIndex, "value")
+				and extrapolate(points[#points - 1], points[#points], pointIndex, "value")
 			or extrapolate(points[1], points[2], pointIndex, "value"),
 		envelope = pointIndex > points[#points].index
-			and extrapolate(points[#points - 1], points[#points], pointIndex, "envelope")
+				and extrapolate(points[#points - 1], points[#points], pointIndex, "envelope")
 			or extrapolate(points[1], points[2], pointIndex, "envelope"),
 	}
 end
 
-local function compressPoints(points: {point}, resolution: number, rangeWidth: number, start: number)
+local function compressPoints(points: { point }, resolution: number, rangeWidth: number, start: number)
 	local resolutionIncrement = rangeWidth / resolution
 	local compressedPoints: { point } = {}
 
@@ -136,7 +142,7 @@ function graphHandler.new(
 		bounds = bounds,
 		color = color,
 		envelopeColor = envelopeColor,
-		pxScale = pxScale or 1
+		pxScale = pxScale or 1,
 	}
 
 	local Container = Instance.new("ViewportFrame")
@@ -183,9 +189,9 @@ function graphHandler.new(
 end
 
 function graphHandler.render(self: graph, frame: GuiObject, resolution: number)
-	if self._redrawConnection then 
+	if self._redrawConnection then
 		self._redrawConnection:Disconnect()
-	end 
+	end
 
 	self._worldmodel:ClearAllChildren()
 	self._container.Parent = frame
@@ -198,7 +204,7 @@ function graphHandler.render(self: graph, frame: GuiObject, resolution: number)
 	local aspectRatio = frame.AbsoluteSize.X / frame.AbsoluteSize.Y
 	local horizontalScale = rangeWidth * aspectRatio
 	local verticalScale = rangeWidth / 2 * 2
-	
+
 	local pxScale = self.pxScale / frame.AbsoluteSize.Y
 	local lineSize = verticalScale * pxScale
 
@@ -218,7 +224,7 @@ function graphHandler.render(self: graph, frame: GuiObject, resolution: number)
 			local rot = math.atan2(endPosition.Y - startPosition.Y, endPosition.X - startPosition.X)
 			local distance = (startPosition - endPosition).Magnitude
 
-			local line = script.Node:Clone()
+			local line = script.assets.Node:Clone()
 			line.Size = Vector3.new(distance, 1, lineSize)
 			local inbetweenPosition = (startPosition + endPosition) / 2
 			line.CFrame = CFrame.new(inbetweenPosition) * CFrame.Angles(0, 0, rot)
@@ -226,16 +232,26 @@ function graphHandler.render(self: graph, frame: GuiObject, resolution: number)
 			line.Parent = self._worldmodel
 
 			-- create sphere to fill gaps
-			local cap = script.Cap:Clone()
+			local cap = script.assets.Cap:Clone()
 			cap.Size = Vector3.new(lineSize, lineSize, lineSize)
 			cap.CFrame = CFrame.new(startPosition)
 			cap.Color = self.color
 			cap.Parent = line
 
-			local verticalSize = convertTo3D(point.envelope + point.value, self.bounds.y.min, self.bounds.y.max, verticalScale) - endPosition.Y
-			local lastEnvelope = convertTo3D(lastPoint.envelope + lastPoint.value, self.bounds.y.min, self.bounds.y.max, verticalScale) - startPosition.Y
+			local verticalSize = convertTo3D(
+				point.envelope + point.value,
+				self.bounds.y.min,
+				self.bounds.y.max,
+				verticalScale
+			) - endPosition.Y
+			local lastEnvelope = convertTo3D(
+				lastPoint.envelope + lastPoint.value,
+				self.bounds.y.min,
+				self.bounds.y.max,
+				verticalScale
+			) - startPosition.Y
 
-			local envelopeSquare = script.Cube:Clone()
+			local envelopeSquare = script.assets.Cube:Clone()
 			envelopeSquare.Color = self.envelopeColor
 			envelopeSquare.Parent = self._worldmodel
 
@@ -250,7 +266,7 @@ function graphHandler.render(self: graph, frame: GuiObject, resolution: number)
 				or startPosition - Vector3.new(0, lastEnvelope, 0)
 			envelopeSquare.BottomRight.WorldPosition = endPosition - Vector3.new(0, verticalSize, 0)
 
-			lineData[i] = {envelopeSquare.TopRight.WorldPosition, envelopeSquare.BottomRight.WorldPosition}
+			lineData[i] = { envelopeSquare.TopRight.WorldPosition, envelopeSquare.BottomRight.WorldPosition }
 		end
 
 		lastPoint = point
@@ -278,16 +294,19 @@ type point = {
 	envelope: number,
 }
 
-export type graph = typeof(setmetatable({} :: {
-	points: { point },
-	bounds: bounds,
-	color: Color3,
-	envelopeColor: Color3,
-	pxScale: number,
-	_container: ViewportFrame,
-	_worldmodel: WorldModel,
-	_camera: Camera,
-	_redrawConnection: RBXScriptConnection,
-}, graphHandler))
+export type graph = typeof(setmetatable(
+	{} :: {
+		points: { point },
+		bounds: bounds,
+		color: Color3,
+		envelopeColor: Color3,
+		pxScale: number,
+		_container: ViewportFrame,
+		_worldmodel: WorldModel,
+		_camera: Camera,
+		_redrawConnection: RBXScriptConnection,
+	},
+	graphHandler
+))
 
 return graphHandler
