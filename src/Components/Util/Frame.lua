@@ -9,7 +9,7 @@ type properties = {
 	Color: Fusion.CanBeState<Color3>,
 	Stroke: Fusion.CanBeState<Color3>?,
 	Size: Fusion.CanBeState<UDim2>?,
-	Position:  Fusion.CanBeState<UDim2>?,
+	Position: Fusion.CanBeState<UDim2>?,
 	AnchorPoint: Vector2?,
 	Parent: Instance?,
 }
@@ -21,7 +21,7 @@ return function(props: properties)
 		table.insert(
 			children,
 			New("UICorner")({
-				CornerRadius = props.CornerSize
+				CornerRadius = props.CornerSize,
 			})
 		)
 	end

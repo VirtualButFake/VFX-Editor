@@ -67,12 +67,18 @@ local function getPoint(points: { point }, pointIndex): point
 
 	return {
 		index = pointIndex,
-		value = pointIndex > points[#points].index
-				and extrapolate(points[#points - 1], points[#points], pointIndex, "value")
-			or extrapolate(points[1], points[2], pointIndex, "value"),
-		envelope = pointIndex > points[#points].index
-				and extrapolate(points[#points - 1], points[#points], pointIndex, "envelope")
-			or extrapolate(points[1], points[2], pointIndex, "envelope"),
+		value = pointIndex > points[#points].index and extrapolate(
+			points[#points - 1],
+			points[#points],
+			pointIndex,
+			"value"
+		) or extrapolate(points[1], points[2], pointIndex, "value"),
+		envelope = pointIndex > points[#points].index and extrapolate(
+			points[#points - 1],
+			points[#points],
+			pointIndex,
+			"envelope"
+		) or extrapolate(points[1], points[2], pointIndex, "envelope"),
 	}
 end
 
@@ -135,7 +141,7 @@ function graphHandler.new(
 	pxScale: number
 ): graph
 	if #points < 2 then
-		error(`Could not create graph with {#points} points. >2 points needed.`)
+		error("Not enough points to draw a graph.")
 	end
 
 	local graph = {
