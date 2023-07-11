@@ -15,33 +15,20 @@ type properties = {
 }
 
 return function(props: properties)
-	local children = {}
-
-	if props.CornerSize then
-		table.insert(
-			children,
-			New("UICorner")({
-				CornerRadius = props.CornerSize,
-			})
-		)
-	end
-
-	if props.Stroke then
-		table.insert(
-			children,
-			New("UIStroke")({
-				Thickness = 1,
-				Color = props.Stroke,
-			})
-		)
-	end
-
 	return New("Frame")({
 		Size = props.Size,
 		Position = props.Position,
 		BackgroundColor3 = props.Color,
 		AnchorPoint = props.AnchorPoint,
 		Parent = props.Parent,
-		[Children] = children,
+		[Children] = {
+			props.Stroke ~= nil and New("UIStroke")({
+				Thickness = 1,
+				Color = props.Stroke,
+			}),
+			props.CornerSize ~= nil and New("UICorner")({
+				CornerRadius = props.CornerSize,
+			}),
+		},
 	})
 end

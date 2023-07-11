@@ -5,8 +5,8 @@ graphHandler.__index = graphHandler
 -- import assets
 local InsertService = game:GetService("InsertService")
 
+-- rojo can't import skinned meshes properly so we do it like this, scuffed i know
 local cube = InsertService:LoadAsset(14021945084):FindFirstChild("Cube")
-cube.Parent = script.assets
 
 local cameraOrientation = CFrame.new(Vector3.new(), Vector3.new(0, 0, -1))
 local fovConstant = 0.017454177141189575 -- found by printing DynamicFieldOfView in a frame with FOV 1 and AR 1:1
@@ -67,12 +67,18 @@ local function getPoint(points: { point }, pointIndex): point
 
 	return {
 		index = pointIndex,
-		value = pointIndex > points[#points].index
-				and extrapolate(points[#points - 1], points[#points], pointIndex, "value")
-			or extrapolate(points[1], points[2], pointIndex, "value"),
-		envelope = pointIndex > points[#points].index
-				and extrapolate(points[#points - 1], points[#points], pointIndex, "envelope")
-			or extrapolate(points[1], points[2], pointIndex, "envelope"),
+		value = pointIndex > points[#points].index and extrapolate(
+			points[#points - 1],
+			points[#points],
+			pointIndex,
+			"value"
+		) or extrapolate(points[1], points[2], pointIndex, "value"),
+		envelope = pointIndex > points[#points].index and extrapolate(
+			points[#points - 1],
+			points[#points],
+			pointIndex,
+			"envelope"
+		) or extrapolate(points[1], points[2], pointIndex, "envelope"),
 	}
 end
 
@@ -251,7 +257,7 @@ function graphHandler.render(self: graph, frame: GuiObject, resolution: number)
 				verticalScale
 			) - startPosition.Y
 
-			local envelopeSquare = script.assets.Cube:Clone()
+			local envelopeSquare = cube:Clone()
 			envelopeSquare.Color = self.envelopeColor
 			envelopeSquare.Parent = self._worldmodel
 
