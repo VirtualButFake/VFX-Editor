@@ -3,11 +3,6 @@
 registry = "test"
 
 [[package]]
-name = "elttob/fusion"
-version = "0.2.0"
-dependencies = []
-
-[[package]]
 name = "nightcycle/maid"
 version = "1.1.4"
 dependencies = []
@@ -15,4 +10,4 @@ dependencies = []
 [[package]]
 name = "virtualbutfake/vfx-editor"
 version = "0.1.0"
-dependencies = [["fusion", "elttob/fusion@0.2.0"], ["maid", "nightcycle/maid@1.1.4"]]
+dependencies = [["maid", "nightcycle/maid@1.1.4"]]

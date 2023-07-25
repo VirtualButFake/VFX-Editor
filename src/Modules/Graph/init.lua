@@ -155,7 +155,6 @@ function graphHandler.new(
 	local WorldModel = Instance.new("WorldModel")
 	WorldModel.Parent = Container
 
-	-- camera
 	local Camera = Instance.new("Camera")
 	Camera.FieldOfView = 1
 	Camera.CFrame = cameraOrientation * CFrame.new(0, 0, -bounds.x.max - bounds.x.min)
@@ -172,7 +171,7 @@ function graphHandler.new(
 			table.insert(newPoints, {
 				index = idx,
 				value = point,
-				envelope = 0, -- probably not a particle related graph if it's passed like this
+				envelope = 0,
 			})
 		else
 			if point.envelope == nil then

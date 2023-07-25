@@ -1,4 +1,4 @@
-local Fusion = require(script.Parent.Packages.fusion)
+local Fusion = require(script.Parent.Modules.fusion)
 
 return {
 	name = "VFX Editor",
