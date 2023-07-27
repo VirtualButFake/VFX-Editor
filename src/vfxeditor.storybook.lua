@@ -1,8 +1,8 @@
-local Fusion = require(script.Parent.Modules.fusion)
+local fusion = require(script.Parent.Modules.fusion)
 
 return {
 	name = "VFX Editor",
-	Fusion = Fusion,
+	Fusion = fusion,
 	storyRoots = {
 		script.Parent.Components,
 	},

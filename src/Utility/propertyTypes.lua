@@ -1,34 +1,34 @@
 local types = {}
 -- generic types that are used throughout a lot of components, aimed specifically at reducing duplicate code
 -- might look useless for now but it felt horrible to keep copy pasting the same shit for properties like size and position
-local Modules = script.Parent.Parent.Modules
-local Fusion = require(Modules.fusion)
+local packages = script.Parent.Parent.Modules
+local fusion = require(packages.fusion)
 
 export type frameProperties = {
-	Color: Fusion.CanBeState<Color3>,
-	Size: Fusion.CanBeState<UDim2>?,
-	Position: Fusion.CanBeState<UDim2>?,
-	AnchorPoint: Fusion.CanBeState<Vector2>?,
-	Parent: Fusion.CanBeState<Instance>?,
+	Color: fusion.CanBeState<Color3>,
+	Size: fusion.CanBeState<UDim2>?,
+	Position: fusion.CanBeState<UDim2>?,
+	AnchorPoint: fusion.CanBeState<Vector2>?,
+	Parent: fusion.CanBeState<Instance>?,
 	-- more dynamic properties
-	PaddingSize: Vector2?,
+	PaddingSize: number?,
 	Stroke: Color3?,
 	CornerSize: UDim?,
 }
 
 export type textProperties = {
-	Text: Fusion.CanBeState<string>,
-	TextColor: Fusion.CanBeState<Color3>,
-	TextSize: Fusion.CanBeState<number>?,
+	Text: fusion.CanBeState<string>?,
+	TextColor: fusion.CanBeState<Color3>?,
+	TextSize: fusion.CanBeState<number>?,
 	Font: Enum.Font?, -- no Font object support (yet)
 	-- textbox properties
-	PlaceholderColor: Fusion.CanBeState<Color3>?,
-	PlaceholderText: Fusion.CanBeState<string>?,
+	PlaceholderColor: fusion.CanBeState<Color3>?,
+	PlaceholderText: fusion.CanBeState<string>?,
 }
 
 export type interactiveProperties = {
-	HoverColor: Fusion.CanBeState<Color3>,
-	ClickColor: Fusion.CanBeState<Color3>?, -- not all components have a click interaction
+	HoverColor: fusion.CanBeState<Color3>,
+	ClickColor: fusion.CanBeState<Color3>?, -- not all components have a click interaction
 }
 
 return types

@@ -1,4 +1,4 @@
-local Frame = require(script.Parent.Frame)
+local frame = require(script.Parent.Frame)
 
 local ContextMenu = require(script.Parent.ContextMenu)
 local PluginMenu = require(script.Parent.PluginMenu)
@@ -7,7 +7,7 @@ local PluginAction = require(script.Parent.PluginAction)
 return {
 	summary = "context menu",
 	story = function(a)
-		local hostFrame = Frame({
+		local hostFrame = frame({
 			frameProperties = {
 				Color = Color3.fromRGB(33, 33, 33),
 				Position = UDim2.new(0.5, 0, 0.5, 0),

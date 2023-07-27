@@ -6,7 +6,7 @@ local fusion = require(packages.fusion)
 local types = require(utility.propertyTypes)
 local ripple = require(utility.ripple)
 
-local Frame = require(script.Parent.Frame)
+local frame = require(script.Parent.Frame)
 
 local new = fusion.New
 local children = fusion.Children
@@ -89,7 +89,7 @@ return function(props: properties)
 				),
 				BackgroundTransparency = 1,
 			}),
-			Frame({
+			frame({
 				frameProperties = {
 					Size = UDim2.new(1, 8, 1, 8),
 					Position = UDim2.fromScale(0.5, 0.5),

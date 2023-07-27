@@ -1,103 +1,102 @@
-local Modules = script.Parent.Parent.Parent.Modules
-local Fusion = require(Modules.fusion)
+local root = script.Parent.Parent.Parent
+local packages = root.Modules
+local utility = root.Utility
 
-local New = Fusion.New
-local Children = Fusion.Children
-local Event = Fusion.OnEvent
+local fusion = require(packages.fusion)
+local types = require(utility.propertyTypes)
 
-local Tween = Fusion.Tween
-local Computed = Fusion.Computed
-local Value = Fusion.Value
-local Ref = Fusion.Ref
-local Out = Fusion.Out
+local new = fusion.New
+local children = fusion.Children
+
+local ref = fusion.Ref
+local out = fusion.Out
+local event = fusion.OnEvent
+
+local computed = fusion.Computed
+local value = fusion.Value
+
+local tween = fusion.Tween
 
 type properties = {
-	CornerSize: Fusion.CanBeState<UDim>?,
-	Color: Fusion.CanBeState<Color3>,
-	Stroke: Fusion.CanBeState<Color3>?,
-	Size: Fusion.CanBeState<UDim2>?,
-	Position: Fusion.CanBeState<UDim2>?,
-	AnchorPoint: Fusion.CanBeState<Vector2>?,
-	Parent: Instance?,
-	Text: Fusion.Value<string>?,
-	Placeholder: string?,
-	TextColor: Fusion.CanBeState<Color3>?,
-	TextSize: Fusion.CanBeState<number>?,
-	PlaceholderColor: Fusion.CanBeState<Color3>?,
-	Font: Enum.Font,
-	HoverColor: Color3?,
-	HoverStroke: Color3?,
+	frameProperties: types.frameProperties,
+	textProperties: types.textProperties,
+	-- not grouping the 2 properties below into interactiveProperties because we need seperate colors
+	HoverColor: fusion.CanBeState<Color3>?,
+	HoverStroke: fusion.CanBeState<Color3>?,
 	AutoSizeX: boolean?,
 	AutoSizeY: boolean?,
-	PaddingSize: number?,
-	MaxSize: Fusion.CanBeState<Vector2>?,
+	MaxSize: fusion.CanBeState<Vector2>?,
+	State: fusion.Value<string>,
 }
 
 return function(props: properties)
-	local isFocused = Value(false)
-	local box = Value()
+	local isFocused = value(false)
+	local box = value(nil)
 
-	return New("TextBox")({
+	local frameProperties = props.frameProperties
+	local textProperties = props.textProperties
+
+	return new("TextBox")({
 		Name = "Textbox",
-		AnchorPoint = props.AnchorPoint,
-		Position = props.Position,
-		Size = props.Size,
+		AnchorPoint = frameProperties.AnchorPoint,
+		Position = frameProperties.Position,
+		Size = frameProperties.Size,
 		AutomaticSize = props.AutoSizeX and props.AutoSizeY and Enum.AutomaticSize.XY
 			or props.AutoSizeX and Enum.AutomaticSize.X
 			or props.AutoSizeY and Enum.AutomaticSize.Y,
 		-- appearance
-		BackgroundColor3 = Tween(
-			Computed(function()
-				if isFocused:get() then
-					return props.HoverColor or props.Color
+		BackgroundColor3 = tween(
+			computed(function(use)
+				if use(isFocused) then
+					return use(props.HoverColor) or use(frameProperties.Color)
 				else
-					return props.Color
+					return use(frameProperties.Color)
 				end
 			end),
 			TweenInfo.new(0.3, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out)
 		),
-		Text = props.Text,
-		TextSize = props.TextSize,
-		PlaceholderText = props.Placeholder,
-		PlaceholderColor3 = props.PlaceholderColor,
-		Font = props.Font,
-		TextColor3 = props.TextColor,
+		Text = textProperties.Text,
+		TextSize = textProperties.TextSize,
+		PlaceholderText = textProperties.PlaceholderText,
+		PlaceholderColor3 = textProperties.PlaceholderColor,
+		Font = textProperties.Font,
+		TextColor3 = textProperties.TextColor,
 		TextWrapped = props.AutoSizeY and true,
-		Parent = props.Parent,
-		[Ref] = box,
-		[Event("Focused")] = function()
+		Parent = frameProperties.Parent,
+		[ref] = box,
+		[event("Focused")] = function()
 			isFocused:set(true)
 		end,
-		[Event("FocusLost")] = function()
+		[event("FocusLost")] = function()
 			isFocused:set(false)
 		end,
-		[Out("Text")] = props.Text,
-		[Children] = {
-			props.MaxSize and New("UISizeConstraint")({
+		[out("Text")] = props.State,
+		[children] = {
+			props.MaxSize and new("UISizeConstraint")({
 				MaxSize = props.MaxSize,
 			}),
-			props.PaddingSize and New("UIPadding")({
-				PaddingBottom = UDim.new(0, props.PaddingSize),
-				PaddingTop = UDim.new(0, props.PaddingSize),
-				PaddingLeft = UDim.new(0, props.PaddingSize),
-				PaddingRight = UDim.new(0, props.PaddingSize),
+			frameProperties.PaddingSize and new("UIPadding")({
+				PaddingBottom = UDim.new(0, frameProperties.PaddingSize),
+				PaddingTop = UDim.new(0, frameProperties.PaddingSize),
+				PaddingLeft = UDim.new(0, frameProperties.PaddingSize),
+				PaddingRight = UDim.new(0, frameProperties.PaddingSize),
 			}),
-			props.Stroke and New("UIStroke")({
+			frameProperties.Stroke and new("UIStroke")({
 				Thickness = 1,
-				Color = Tween(
-					Computed(function()
-						if isFocused:get() then
-							return props.HoverStroke or props.Stroke
+				Color = tween(
+					computed(function(use)
+						if use(isFocused) then
+							return use(props.HoverStroke) or use(frameProperties.Stroke)
 						else
-							return props.Stroke
+							return use(frameProperties.Stroke)
 						end
 					end),
 					TweenInfo.new(0.3, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out)
 				),
 				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
 			}),
-			props.CornerSize and New("UICorner")({
-				CornerRadius = props.CornerSize,
+			frameProperties.CornerSize and new("UICorner")({
+				CornerRadius = frameProperties.CornerSize,
 			}),
 		},
 	})

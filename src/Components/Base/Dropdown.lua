@@ -6,7 +6,7 @@ local fusion = require(packages.fusion)
 local types = require(utility.propertyTypes)
 local ripple = require(utility.ripple)
 
-local Frame = require(script.Parent.Frame)
+local frame = require(script.Parent.Frame)
 
 local new = fusion.New
 local children = fusion.Children
@@ -72,7 +72,7 @@ return function(props: properties)
 		return offsetSize
 	end)
 
-	local clickFrame = value() -- click container
+	local clickFrame = value(nil) -- click container
 
 	local dropdownImage = value("rbxassetid://0")
 	local isHovering = value(false)
@@ -101,7 +101,7 @@ return function(props: properties)
 				Padding = UDim.new(0, 4),
 				SortOrder = Enum.SortOrder.LayoutOrder,
 			}),
-			Frame({
+			frame({
 				frameProperties = {
 					Color = frameProperties.Color,
 					CornerSize = UDim.new(0, 4),
@@ -278,7 +278,7 @@ return function(props: properties)
 						ZIndex = 2,
 						[ref] = clickFrame,
 					}),
-					frameProperties.Stroke ~= nil and new("UIStroke")({
+					frameProperties.Stroke and new("UIStroke")({
 						Thickness = 1,
 						Color = frameProperties.Stroke,
 					}),
@@ -292,6 +292,7 @@ return function(props: properties)
 						AutomaticCanvasSize = Enum.AutomaticSize.Y,
 						AutomaticSize = props.AutoSize and Enum.AutomaticSize.X,
 						BackgroundTransparency = 1,
+						ScrollBarThickness = 0,
 						[children] = {
 							new("UIListLayout")({
 								FillDirection = Enum.FillDirection.Vertical,
