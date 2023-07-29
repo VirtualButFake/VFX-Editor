@@ -1,14 +1,14 @@
 local Searchbar = require(script.Parent.Searchbar)
 
-local Modules = script.Parent.Parent.Parent.Modules
-local Fusion = require(Modules.fusion)
+local Packages = script.Parent.Parent.Parent.Packages
+local Fusion = require(Packages.fusion)
 
 return {
 	summary = "A generic search box component",
 	story = function(a)
 		local options = Fusion.Value({
 			{
-				value = "sus1",
+				value = "sus13",
 			},
 			{
 				value = "cum",

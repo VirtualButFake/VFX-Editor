@@ -7,7 +7,7 @@
             "$ignoreUnknownInstances": true,
             "$path": "src",
             "Packages": {
-                "$path": "packages"
+              "$path": "packages"
             }
         }
     }

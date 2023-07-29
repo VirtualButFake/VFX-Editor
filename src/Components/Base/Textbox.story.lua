@@ -1,7 +1,7 @@
 local Textbox = require(script.Parent.Textbox)
 
-local Modules = script.Parent.Parent.Parent.Modules
-local Fusion = require(Modules.fusion)
+local Packages = script.Parent.Parent.Parent.Packages
+local Fusion = require(Packages.fusion)
 
 return {
 	summary = "A generic text box component",
@@ -28,7 +28,7 @@ return {
 			HoverStroke = Color3.fromRGB(80, 80, 80),
 			AutoSizeX = true,
 			AutoSizeY = true,
-			State = state
+			State = state,
 		})
 
 		return function()

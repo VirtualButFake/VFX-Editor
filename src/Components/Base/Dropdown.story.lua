@@ -1,7 +1,7 @@
 local Dropdown = require(script.Parent.Dropdown)
 
-local Modules = script.Parent.Parent.Parent.Modules
-local Fusion = require(Modules.fusion)
+local Packages = script.Parent.Parent.Parent.Packages
+local Fusion = require(Packages.fusion)
 
 return {
 	summary = "A generic dropdown component",

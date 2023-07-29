@@ -1,5 +1,5 @@
 local root = script.Parent.Parent.Parent
-local packages = root.Modules
+local packages = root.Packages
 local utility = root.Utility
 
 local fusion = require(packages.fusion)
@@ -27,6 +27,7 @@ type properties = {
 	Icon: string?,
 	IconInFront: boolean?,
 	Callback: (InputObject) -> (),
+	Ripple: boolean,
 }
 
 return function(props: properties)
@@ -86,11 +87,13 @@ return function(props: properties)
 					isHovering:set(false)
 				end,
 				[event("Activated")] = function(input)
-					task.spawn(ripple, {
-						Position = Vector2.new(input.Position.X, input.Position.Y),
-						Speed = 0.5,
-						Frame = peek(parentFrame),
-					})
+					if props.Ripple then
+						task.spawn(ripple, {
+							Position = Vector2.new(input.Position.X, input.Position.Y),
+							Speed = 0.5,
+							Frame = peek(parentFrame),
+						})
+					end
 
 					task.spawn(props.Callback, input)
 				end,

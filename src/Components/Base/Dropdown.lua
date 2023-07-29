@@ -1,5 +1,5 @@
 local root = script.Parent.Parent.Parent
-local packages = root.Modules
+local packages = root.Packages
 local utility = root.Utility
 
 local fusion = require(packages.fusion)
@@ -114,11 +114,11 @@ return function(props: properties)
 						return UDim2.fromScale(1, 1)
 					end) or UDim2.fromScale(1, 1),
 				},
-				LayoutOrder = -1,
-				Name = "Dropdown",
-
-				AutomaticSize = props.AutoSize and Enum.AutomaticSize.Y,
-
+				otherProperties = {
+					LayoutOrder = -1,
+					Name = "Dropdown",
+					AutomaticSize = props.AutoSize and Enum.AutomaticSize.Y,
+				},
 				Children = {
 					new("ImageButton")({
 						Name = "Expand",

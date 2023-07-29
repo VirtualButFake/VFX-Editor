@@ -1,5 +1,5 @@
 local root = script.Parent.Parent.Parent
-local packages = root.Modules
+local packages = root.Packages
 local utility = root.Utility
 
 local fusion = require(packages.fusion)
@@ -97,17 +97,19 @@ return function(props: properties)
 					AnchorPoint = Vector2.new(0.5, 0.5),
 					CornerSize = frameProperties.CornerSize,
 				},
-				ZIndex = 0,
-				BackgroundTransparency = tween(
-					computed(function(use)
-						if use(props.State) then
-							return 0
-						else
-							return 1
-						end
-					end),
-					TweenInfo.new(0.3, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out)
-				),
+				otherProperties = {
+					ZIndex = 0,
+					BackgroundTransparency = tween(
+						computed(function(use)
+							if use(props.State) then
+								return 0
+							else
+								return 1
+							end
+						end),
+						TweenInfo.new(0.3, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out)
+					),
+				},
 			}),
 			new("UIPadding")({
 				PaddingTop = UDim.new(0, 4),

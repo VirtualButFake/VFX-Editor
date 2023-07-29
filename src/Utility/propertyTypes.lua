@@ -1,7 +1,6 @@
 local types = {}
 -- generic types that are used throughout a lot of components, aimed specifically at reducing duplicate code
--- might look useless for now but it felt horrible to keep copy pasting the same shit for properties like size and position
-local packages = script.Parent.Parent.Modules
+local packages = script.Parent.Parent.Packages
 local fusion = require(packages.fusion)
 
 export type frameProperties = {

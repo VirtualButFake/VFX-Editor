@@ -1,5 +1,5 @@
 local root = script.Parent.Parent.Parent
-local packages = root.Modules
+local packages = root.Packages
 local utility = root.Utility
 
 local fusion = require(packages.fusion)

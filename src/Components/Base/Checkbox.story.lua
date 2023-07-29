@@ -1,7 +1,7 @@
 local Checkbox = require(script.Parent.Checkbox)
 
-local Modules = script.Parent.Parent.Parent.Modules
-local Fusion = require(Modules.fusion)
+local Packages = script.Parent.Parent.Parent.Packages
+local Fusion = require(Packages.fusion)
 
 local peek = Fusion.peek
 

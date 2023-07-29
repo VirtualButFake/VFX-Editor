@@ -6,3 +6,4 @@ realm = "shared"
 
 [dependencies]
 maid = "nightcycle/maid@1.1.4"
+fusion = "virtualbutfake/fusion@0.3.0-dev.1"

@@ -1,5 +1,5 @@
 local root = script.Parent.Parent.Parent
-local packages = root.Modules
+local packages = root.Packages
 local utility = root.Utility
 
 local fusion = require(packages.fusion)
@@ -9,7 +9,6 @@ local frame = require(script.Parent.Frame)
 
 local new = fusion.New
 local children = fusion.Children
-local hydrate = fusion.Hydrate
 
 local change = fusion.OnChange
 local out = fusion.Out
@@ -37,7 +36,7 @@ type properties = {
 	AvailableOptions: fusion.Value<{
 		{
 			index: any,
-			value: option,
+			option: option,
 		}
 	}>, -- value object that holds the options that meet the current text. this is also the **only** way to access found values. the text is not exposed to make sure behaviour is consistent
 }
@@ -59,9 +58,7 @@ return function(props: properties)
 	local isFocused = value(false)
 	local searchQuery = value(textProperties.Text or "")
 
-	-- hydrating here to put absolutesize in state object
-	return hydrate(frame({
-		Name = "Searchbar",
+	return frame({
 		frameProperties = {
 			Size = frameProperties.Size,
 			Position = frameProperties.Position,
@@ -89,10 +86,12 @@ return function(props: properties)
 			AnchorPoint = frameProperties.AnchorPoint,
 			CornerSize = frameProperties.CornerSize,
 		},
-	}))({
-		ClipsDescendants = true,
-		[out("AbsoluteSize")] = absoluteSize,
-		[children] = {
+		otherProperties = {
+			Name = "Searchbar",
+			ClipsDescendants = true,
+			[out("AbsoluteSize")] = absoluteSize,
+		},
+		Children = {
 			new("Frame")({
 				Size = UDim2.fromScale(1, 1),
 				BackgroundTransparency = 1,
@@ -149,18 +148,19 @@ return function(props: properties)
 								if getMatch(value, text) then
 									table.insert(availableResults, {
 										index = i,
-										value = option,
+										option = option,
 									})
 									continue
 								end
 
 								if aliases then
 									for _, alias in aliases do
-										if getMatch(alias, text) then
+										if getMatch(peek(alias), text) then
 											table.insert(availableResults, {
 												index = i,
-												value = option,
+												option = option,
 											})
+
 											break
 										end
 									end
@@ -209,7 +209,7 @@ return function(props: properties)
 							local options = peek(props.AvailableOptions)
 
 							if options and #options == 1 then
-								searchQuery:set(options[1].value)
+								searchQuery:set(peek(options[1].option.value))
 							end
 						end,
 						BackgroundTransparency = 1,
@@ -223,9 +223,9 @@ return function(props: properties)
 									if
 										#results == 1
 										and use(isFocused)
-										and getMatch(results[1].value, use(searchQuery))
+										and getMatch(peek(results[1].option.value), use(searchQuery))
 									then
-										return results[1].value
+										return results[1].option.value
 									end
 
 									return ""

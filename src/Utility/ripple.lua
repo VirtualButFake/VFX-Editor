@@ -1,4 +1,4 @@
-local packages = script.Parent.Parent.Modules
+local packages = script.Parent.Parent.Packages
 local fusion = require(packages.fusion)
 
 local new = fusion.New

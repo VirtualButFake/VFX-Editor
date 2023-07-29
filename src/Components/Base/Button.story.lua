@@ -28,6 +28,7 @@ return {
 			AutoSize = true,
 			Icon = "rbxassetid://13947608200",
 			IconInFront = true,
+			Ripple = true
 		})
 
 		return function()
