@@ -1,0 +1,14 @@
+[package]
+name = "virtualbutfake/fusion"
+description = "Fusion 0.3 (wip) pushed to Wally"
+license = "MIT"
+authors = ["Elttob"]
+version = "0.3.0-dev.1"
+
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+
+exclude = ["**"]
+include = ["src", "src/*", "default.project.json", "wally.lock", "wally.toml"]
+
+[dependencies]

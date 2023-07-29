@@ -5,5 +5,5 @@ registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 
 [dependencies]
-fusion = "elttob/fusion@0.2.0"
 maid = "nightcycle/maid@1.1.4"
+fusion = "virtualbutfake/fusion@0.3.0-dev.1"
